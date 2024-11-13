@@ -17,7 +17,7 @@ namespace HW_GenericStack
 
             //1.feladat
             var slicedStack = genericStack.slice(1, 4);
-            Console.WriteLine($"1.feladat: \n{string.Join("\t", slicedStack)}\n");
+            Console.WriteLine($"1.feladat: \n{string.Join("\t", slicedStack.Reverse())}\n");
 
             //2.feladat
             var splicedStack = genericStack.splice(2, 3, new int[]{9,9,9});
@@ -29,6 +29,10 @@ namespace HW_GenericStack
             //4.feladat
             genericStack.unshift(9);
             Console.WriteLine($"4.feladat: \n{genericStack.ToString()}\n");
+
+            //5.feladat
+            Stack<float> floatStack = genericStack.map<float>(i => i / 100f);
+            Console.WriteLine($"5.feladat: \n{string.Join("\t",floatStack.Reverse())}\n");
         }
     }
 }

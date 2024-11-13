@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,8 +41,8 @@ namespace HW_GenericStack
         {
             //handling invalid input
             if(end <= start) throw new InvalidOperationException("End must be bigger than start");
-            if(end < 0 || end >= this.elements.Count) throw new InvalidOperationException("End is out of range");
-            if(start < 0 || start >= this.elements.Count) throw new InvalidOperationException("Start is out of range");
+            if (!Enumerable.Range(0, this.elements.Count-1).Contains(start)) throw new InvalidOperationException("Start is out of range");
+            if (!Enumerable.Range(0, this.elements.Count-1).Contains(end)) throw new InvalidOperationException("End is out of range");
 
             //main stuff
             var stack = new Stack<T>();
@@ -71,10 +72,15 @@ namespace HW_GenericStack
         {
             this.elements.Insert(0, item);
         }
+        public Stack<R> map<R>(Func<T,R> transform){
+            Stack<R> stack = new Stack<R>();
+            this.elements.ForEach(e => stack.Push(transform(e)));
+            return stack;
+        }
 
-        //for debugging purposes
         public override string ToString()
         {
+            //for debugging purposes
             return string.Join("\t", this.elements);
         }
     }
